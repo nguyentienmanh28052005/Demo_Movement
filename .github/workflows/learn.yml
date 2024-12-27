@@ -1,0 +1,10 @@
+name: learn
+on: workflow_dispatch
+jobs:
+  firstjob: 
+    runs-on: ubuntu-lastest
+    steps:
+      - name: Print Greetings
+        run: echo "Hello World"
+    
+
