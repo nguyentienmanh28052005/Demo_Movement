@@ -12,6 +12,15 @@ public class Test : MonoBehaviour
     private float _power = 30f;
     public GameObject _cam;
     public LineRenderer _line;
+    private float _targetRotation = 0.0f;
+    private float _rotationVelocity;
+    private float _verticalVelocity;
+    public float _power2 = 50f;
+    
+    
+    [Range(0.0f, 0.3f)]
+    public float RotationSmoothTime = 0.12f;
+
 
         
     [Header("Force Mode")] 
@@ -39,7 +48,7 @@ public class Test : MonoBehaviour
             //Transform_Position();
             Rigidbody_velocity();
             //Rigidbody_Moveposition();
-            Rigidbody_AddForce();
+            //Rigidbody_AddForce2();
             //CharacterController_Move();
     }
 
@@ -67,9 +76,28 @@ public class Test : MonoBehaviour
 
     private void Rigidbody_velocity()
     {
-        // Vector3 m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        // _rigidbody.linearVelocity = m_Input * _speed;
-        
+         Vector3 m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        //_rigidbody.linearVelocity = m_Input * _speed;
+        if (Input.GetKey(KeyCode.A))
+        {
+            m_Input = _cam.transform.right * -1 * _power2;
+            _rigidbody.linearVelocity = m_Input;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            m_Input = _cam.transform.right * _power2; 
+            _rigidbody.linearVelocity = m_Input;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            m_Input = _cam.transform.forward * _power2;        
+            _rigidbody.linearVelocity = m_Input;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            m_Input = _cam.transform.forward * -1 * _power2;           
+            _rigidbody.linearVelocity = m_Input;
+        }
         if (Input.GetMouseButtonUp(0))
         {
             _rigidbody.linearVelocity = _cam.transform.forward * _power;
@@ -84,23 +112,19 @@ public class Test : MonoBehaviour
 
     private void Rigidbody_AddForce()
     {
-        // if(Input.GetMouseButtonUp(0))
-        // {
-        //     Vector3 force = new Vector3(0, 0, 100f); 
-        //     _rigidbody.AddForce(_cam.transform.forward, _forceMode);
-        // }
         Vector3 m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        _rigidbody.AddForce(_cam.transform.position + m_Input * 1000f * Time.deltaTime);
+        if (Input.GetKey(KeyCode.A)) m_Input = _cam.transform.right * -1 * _power2;
+        if (Input.GetKey(KeyCode.D)) m_Input = _cam.transform.right * _power2;
+        if (Input.GetKey(KeyCode.W)) m_Input = _cam.transform.forward * _power2;
+        if (Input.GetKey(KeyCode.S)) m_Input = _cam.transform.forward * -1 * _power2;
+        m_Input.y = 0; ;
+        _rigidbody.AddForce(m_Input.normalized * _power2 * Time.deltaTime, _forceMode);
     }
+    
 
     private void CharacterController_Move()
     {
-        Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        _characterController.Move(move * Time.deltaTime * _speed);
-    }
-
-    private void Fire()
-    {
-        //Instantiate(_bullet);
+        Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        _characterController.Move(inputDirection.normalized * (_speed * Time.deltaTime));
     }
 }

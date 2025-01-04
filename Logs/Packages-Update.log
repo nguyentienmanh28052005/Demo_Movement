@@ -52,3 +52,19 @@ The following packages were added:
   com.unity.analytics@3.8.1
   com.unity.purchasing@4.11.0
   com.unity.xr.legacyinputhelpers@2.1.10
+
+=== Mon Dec 30 10:00:44 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.cinemachine from version 2.8.9 to 2.10.0
+
+=== Mon Dec 30 10:00:44 2024
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.cinemachine@2.10.0
